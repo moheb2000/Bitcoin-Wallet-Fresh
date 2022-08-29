@@ -65,8 +65,7 @@ export default function Home({ data }: PageProps<Data>) {
                 placeholder="Private Key"
                 value={privateKey}
                 required
-              >
-              </input>
+              />
               <button type="submit" class="pure-button pure-button-primary">
                 Check
               </button>
@@ -84,8 +83,7 @@ export default function Home({ data }: PageProps<Data>) {
                 placeholder="Public Key"
                 value={publicKey}
                 required
-              >
-              </input>
+              />
               <button type="submit" class="pure-button pure-button-primary">
                 Check
               </button>
@@ -103,8 +101,7 @@ export default function Home({ data }: PageProps<Data>) {
                 placeholder="Public Key Hash"
                 value={publicKeyHash}
                 required
-              >
-              </input>
+              />
               <button type="submit" class="pure-button pure-button-primary">
                 Check
               </button>
@@ -121,8 +118,7 @@ export default function Home({ data }: PageProps<Data>) {
                 placeholder="Step1"
                 readonly
                 value={publicKeyAddress[0]}
-              >
-              </input>
+              />
               <label for="step2">Step2</label>
               <input
                 type="text"
@@ -131,8 +127,7 @@ export default function Home({ data }: PageProps<Data>) {
                 placeholder="Step2"
                 readonly
                 value={publicKeyAddress[1]}
-              >
-              </input>
+              />
               <label for="step3">Step3</label>
               <input
                 type="text"
@@ -141,8 +136,7 @@ export default function Home({ data }: PageProps<Data>) {
                 placeholder="Step3"
                 readonly
                 value={publicKeyAddress[2]}
-              >
-              </input>
+              />
               <label for="step4">Checksum</label>
               <input
                 type="text"
@@ -150,8 +144,7 @@ export default function Home({ data }: PageProps<Data>) {
                 placeholder="Checksum"
                 readonly
                 value={publicKeyAddress[3]}
-              >
-              </input>
+              />
               <label for="step5">Step5</label>
               <input
                 type="text"
@@ -160,8 +153,7 @@ export default function Home({ data }: PageProps<Data>) {
                 placeholder="Step5"
                 readonly
                 value={publicKeyAddress[4]}
-              >
-              </input>
+              />
               <label for="step6">Public Address</label>
               <input
                 type="text"
@@ -170,8 +162,7 @@ export default function Home({ data }: PageProps<Data>) {
                 placeholder="Public Adress"
                 readonly
                 value={publicKeyAddress[5]}
-              >
-              </input>
+              />
             </fieldset>
           </form>
         </div>
