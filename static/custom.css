@@ -1,0 +1,7 @@
+@media screen and (min-width: 48em) {
+  .qrcode-card {
+    top: 0;
+    right: 0;
+    position: fixed;
+  }
+}

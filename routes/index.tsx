@@ -1,6 +1,7 @@
 /** @jsx h */
 import { h } from "preact";
 import { Handlers, PageProps } from "$fresh/server.ts";
+import { qrcode } from "https://deno.land/x/qrcode@v2.0.0/mod.ts";
 import * as Key from "../modules/generate.ts";
 
 interface Data {
@@ -8,6 +9,7 @@ interface Data {
   publicKey: string;
   publicKeyHash: string;
   publicKeyAddress: string[];
+  base64image: string;
 }
 
 export const handler: Handlers<Data> = {
@@ -21,17 +23,19 @@ export const handler: Handlers<Data> = {
     if (url.searchParams.get("pkh")) privateKey = "", publicKey = "";
     const publicAddressJSON = await Key.createPublicAddress(publicKeyHash);
     const publicKeyAddress = Object.values(publicAddressJSON);
+    const base64image = String(await qrcode(publicKeyAddress[5]));
     return ctx.render({
       privateKey,
       publicKey,
       publicKeyHash,
       publicKeyAddress,
+      base64image,
     });
   },
 };
 
 export default function Home({ data }: PageProps<Data>) {
-  const { privateKey, publicKey, publicKeyHash, publicKeyAddress } = data;
+  const { privateKey, publicKey, publicKeyHash, publicKeyAddress, base64image } = data;
   return (
     <main>
       <div class="pure-g">
@@ -171,7 +175,7 @@ export default function Home({ data }: PageProps<Data>) {
             </fieldset>
           </form>
         </div>
-        <div class="pure-u-1 pure-u-md-1-4"></div>
+        <div class="pure-u-1 pure-u-md-1-4 qrcode-card"><img class="pure-img" src={base64image} alt="qrcode" /></div>
       </div>
     </main>
   );
