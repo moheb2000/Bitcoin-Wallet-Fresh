@@ -1,13 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;700&display=swap');
+
+*, *::before, *::after {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400;
+}
+
+.title, .subtitle {
+  text-align: center;
+}
+
 main {
-  padding-left: 5rem;
-  padding-right: 5rem;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
 }
 
 .qrcode-card {
+  margin-bottom: 2rem;
   padding: .5rem;
   border: 1px solid hsl(0, 0%, 70%);
   border-radius: .5rem;
   box-shadow: 0 1px 5px hsl(0, 0%, 70%);
+}
+
+img {
+  display: block;
+  margin: auto;
 }
 
 @media screen and (min-width: 48em) {
