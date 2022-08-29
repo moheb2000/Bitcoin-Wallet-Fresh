@@ -16,10 +16,12 @@ export const handler: Handlers<Data> = {
   async GET(req, ctx) {
     const url = new URL(req.url);
     let privateKey = url.searchParams.get("sk") || Key.createRandomPrivateKey();
-    let publicKey = url.searchParams.get("pk") || Key.createPublicKey(privateKey);
+    let publicKey = url.searchParams.get("pk") ||
+      Key.createPublicKey(privateKey);
     if (url.searchParams.get("pk")) privateKey = "";
     const publicKeyHashJSON = await Key.createPublicKeyHash(publicKey);
-    const publicKeyHash = url.searchParams.get("pkh") || publicKeyHashJSON.publicKeyHash;
+    const publicKeyHash = url.searchParams.get("pkh") ||
+      publicKeyHashJSON.publicKeyHash;
     if (url.searchParams.get("pkh")) privateKey = "", publicKey = "";
     const publicAddressJSON = await Key.createPublicAddress(publicKeyHash);
     const publicKeyAddress = Object.values(publicAddressJSON);
@@ -35,7 +37,14 @@ export const handler: Handlers<Data> = {
 };
 
 export default function Home({ data }: PageProps<Data>) {
-  const { privateKey, publicKey, publicKeyHash, publicKeyAddress, base64image } = data;
+  const {
+    privateKey,
+    publicKey,
+    publicKeyHash,
+    publicKeyAddress,
+    base64image,
+  } = data;
+
   return (
     <main>
       <div class="pure-g">
@@ -166,7 +175,24 @@ export default function Home({ data }: PageProps<Data>) {
             </fieldset>
           </form>
         </div>
-        <div class="pure-u-1 pure-u-md-1-4 qrcode-card"><img class="pure-img" src={base64image} alt="qrcode" /></div>
+        <div class="pure-u-1 pure-u-md-1-4 qrcode-column">
+          <div class="qrcode-card">
+            <img class="pure-img" src={base64image} alt="qrcode" />
+            <form action="#" class="pure-form  pure-form-stacked">
+              <fieldset>
+                <label for="adrs">Public Address</label>
+                <input
+                  type="text"
+                  class="pure-input-1"
+                  id="adrs"
+                  placeholder="Public Adress"
+                  readonly
+                  value={publicKeyAddress[5]}
+                />
+              </fieldset>
+            </form>
+          </div>
+        </div>
       </div>
     </main>
   );
