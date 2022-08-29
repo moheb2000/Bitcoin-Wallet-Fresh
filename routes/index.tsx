@@ -12,10 +12,13 @@ interface Data {
 
 export const handler: Handlers<Data> = {
   async GET(req, ctx) {
-    const privateKey = Key.createRandomPrivateKey();
-    const publicKey = Key.createPublicKey(privateKey);
-    const publicKeyHashJSON = await Key.createPublicKeyHash(privateKey);
-    const publicKeyHash = publicKeyHashJSON.publicKeyHash;
+    const url = new URL(req.url);
+    let privateKey = url.searchParams.get("sk") || Key.createRandomPrivateKey();
+    let publicKey = url.searchParams.get("pk") || Key.createPublicKey(privateKey);
+    if (url.searchParams.get("pk")) privateKey = "";
+    const publicKeyHashJSON = await Key.createPublicKeyHash(publicKey);
+    const publicKeyHash = url.searchParams.get("pkh") || publicKeyHashJSON.publicKeyHash;
+    if (url.searchParams.get("pkh")) privateKey = "", publicKey = "";
     const publicAddressJSON = await Key.createPublicAddress(publicKeyHash);
     const publicKeyAddress = Object.values(publicAddressJSON);
     return ctx.render({
@@ -39,23 +42,25 @@ export default function Home({ data }: PageProps<Data>) {
           <h2>Introdunction</h2>
           <p>This is bitcoin wallet introdunction</p>
           <h2>Get Started</h2>
-          <form class="pure-form">
+          <form action="/" class="pure-form">
             <fieldset>
               <button type="submit" class="pure-button pure-button-primary">
                 Create Random
               </button>
             </fieldset>
           </form>
-          <h3>Private Key</h3>
-          <form action="#" class="pure-form  pure-form-stacked">
+          <h3 id="sk">Private Key</h3>
+          <form action="#sk" class="pure-form  pure-form-stacked">
             <fieldset>
               <label for="private-key">Private Key</label>
               <input
                 type="text"
                 class="pure-input-1"
                 id="private-key"
+                name="sk"
                 placeholder="Private Key"
                 value={privateKey}
+                required
               >
               </input>
               <button type="submit" class="pure-button pure-button-primary">
@@ -63,16 +68,18 @@ export default function Home({ data }: PageProps<Data>) {
               </button>
             </fieldset>
           </form>
-          <h3>Public Key</h3>
-          <form action="#" class="pure-form  pure-form-stacked">
+          <h3 id="pk">Public Key</h3>
+          <form action="#pk" class="pure-form  pure-form-stacked">
             <fieldset>
               <label for="public-key">Public Key</label>
               <input
                 type="text"
                 class="pure-input-1"
                 id="public-key"
+                name="pk"
                 placeholder="Public Key"
                 value={publicKey}
+                required
               >
               </input>
               <button type="submit" class="pure-button pure-button-primary">
@@ -80,16 +87,18 @@ export default function Home({ data }: PageProps<Data>) {
               </button>
             </fieldset>
           </form>
-          <h3>Public Key Hash</h3>
-          <form action="#" class="pure-form  pure-form-stacked">
+          <h3 id="pkh">Public Key Hash</h3>
+          <form action="#pkh" class="pure-form  pure-form-stacked">
             <fieldset>
               <label for="public-key-hash">Public Key Hash</label>
               <input
                 type="text"
                 class="pure-input-1"
                 id="public-key-hash"
+                name="pkh"
                 placeholder="Public Key Hash"
                 value={publicKeyHash}
+                required
               >
               </input>
               <button type="submit" class="pure-button pure-button-primary">
